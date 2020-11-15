@@ -1,16 +1,23 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import ChatMessageComponent from '../components/ChatMessage';
+
+import ChatRoomData from '../data/Chats';
+import BG from '../assets/images/BG.png';
 
 const ChatRoomScreen = () => {
     const route = useRoute();
     return (
-        <View>
-            <Text>
-                Chat Room me aapka swagat hai!!!
-                {JSON.stringify(route.params)}
-            </Text>
-        </View>
+        <ImageBackground source={BG} style={{ height: '100%', width: '100%', }}>
+            <FlatList
+                data={ChatRoomData.messages}
+                renderItem={({ item }) => <ChatMessageComponent message={item} />}
+                keyExtractor={(item) => item.id}
+                inverted
+            />
+        </ImageBackground>
     );
 };
 

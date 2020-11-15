@@ -8,6 +8,8 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
+    messageBoxColor: 'white',
+    myMessageBoxColor: '#DCF8C5',
   },
   dark: {
     text: '#fff',
@@ -15,5 +17,7 @@ export default {
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
+    messageBoxColor: 'white',
+    myMessageBoxColor: '#DCF8C',
   },
 };
