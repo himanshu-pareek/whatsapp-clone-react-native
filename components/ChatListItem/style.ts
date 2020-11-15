@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     },
 
     content: {
-        flexDirection: 'column',
         marginLeft: 10,
         justifyContent: 'space-around',
         flex: 1,
