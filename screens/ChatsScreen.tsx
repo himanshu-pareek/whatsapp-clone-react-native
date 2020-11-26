@@ -1,10 +1,10 @@
 import * as React from 'react';
+import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ChatListItem from '../components/ChatListItem';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import NewMessageButton from '../components/NewMessageButton';
 
 import chatRooms from '../data/ChatRooms';
 
@@ -15,9 +15,10 @@ export default function TabTwoScreen() {
       <ChatListItem chatRoom={chatRooms[1]} /> */}
       <FlatList
         data={chatRooms}
-        renderItem={({ item }) => <ChatListItem chatRoom={ item } /> }
-        keyExtractor={( item ) => item.id}
+        renderItem={({ item }) => <ChatListItem chatRoom={item} />}
+        keyExtractor={(item) => item.id}
       />
+      <NewMessageButton />
     </View>
   );
 }
@@ -25,6 +26,6 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
 });

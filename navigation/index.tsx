@@ -13,6 +13,7 @@ import { RootStackParamList } from '../types';
 import MainTabNavigator from './MainTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import ChatRoomScreen from '../screens/ChatRoomScreen';
+import ContactsScreen from '../screens/ContactsScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -64,7 +65,7 @@ function RootNavigator() {
       <Stack.Screen name="ChatRoom"
         component={ChatRoomScreen}
         options={({ route }) => ({
-          title: route.params.name,
+          title: route.params?.name,
           headerRight: () => (
             <View style={{
               flexDirection: 'row',
@@ -78,6 +79,11 @@ function RootNavigator() {
             </View>
           )
         })}
+      />
+
+      <Stack.Screen
+        name="Contacts"
+        component={ContactsScreen}
       />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
