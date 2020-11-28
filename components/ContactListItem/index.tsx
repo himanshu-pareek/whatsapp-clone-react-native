@@ -28,13 +28,23 @@ const ContactListItem = (props: ContactListItemProp) => {
                 style={styles.avatar}
             />
 
-            <View style={{ flex: 1, justifyContent: 'center', marginLeft: 10, }}>
+            <View style={{
+                flex: 1, marginLeft: 10, justifyContent: 'center',
+            }}>
 
                 <TouchableWithoutFeedback onPress={handleContactListItemClicked}>
                     <View style={styles.content}>
                         <View style={styles.upperContent}>
-                            <Text style={styles.name}>
+                            <Text style={styles.name}
+                                numberOfLines={1}>
                                 {user.name}
+                            </Text>
+                        </View>
+
+                        <View style={styles.lowerContent}>
+                            <Text style={styles.status}
+                                numberOfLines={1}>
+                                {user.status}
                             </Text>
                         </View>
                     </View>

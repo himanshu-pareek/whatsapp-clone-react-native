@@ -15,18 +15,25 @@ const styles = StyleSheet.create({
 
     content: {
         marginLeft: 10,
-        justifyContent: 'space-around',
-        flex: 1,
     },
 
-    upperContent: {
+    lowerContent: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+    },
+
+    status: {
+        color: 'gray',
     },
 
     name: {
         fontWeight: 'bold',
         fontSize: 16,
+    },
+
+    upperContent: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
 });
 
