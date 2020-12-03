@@ -48,7 +48,7 @@ const App = () => {
         );
 
         if (userData.data.getUser) {
-          console.log("User is already registered in database");
+          // console.log("User is already registered in database");
           return;
         }
 

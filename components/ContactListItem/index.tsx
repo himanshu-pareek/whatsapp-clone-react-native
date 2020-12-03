@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import { User } from '../../types';
 import styles from './style';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { createChatRoom, createChatRoomUser } from '../../graphql/mutations';
 
 type ContactListItemProp = {
     user: User;
@@ -16,8 +18,62 @@ const ContactListItem = (props: ContactListItemProp) => {
 
     const navigation = useNavigation();
 
-    const handleContactListItemClicked = () => {
-        // later
+    const handleContactListItemClicked = async () => {
+
+        try {
+            // 1. Crate a new Chat Room
+            const newChatRoomData = await API.graphql(
+                graphqlOperation(
+                    createChatRoom,
+                    {
+                        input: {}
+                    }
+                )
+            );
+
+            if (!newChatRoomData.data) {
+                console.log('Failed to create new chat room');
+                return;
+            }
+
+            const newChatRoom = newChatRoomData.data.createChatRoom;
+
+            // 2. Add `user` to new chat room
+            await API.graphql(
+                graphqlOperation(
+                    createChatRoomUser,
+                    {
+                        input: {
+                            userId: user.id,
+                            chatRoomId: newChatRoom.id,
+                        },
+                    }
+                )
+            );
+
+            // 3. Add authenticated user to new chat room
+            const userInfo = await Auth.currentAuthenticatedUser();
+
+            await API.graphql(
+                graphqlOperation(
+                    createChatRoomUser,
+                    {
+                        input: {
+                            userId: userInfo.attributes.sub,
+                            chatRoomId: newChatRoom.id,
+                        },
+                    }
+                )
+            );
+
+            navigation.navigate('ChatRoom', {
+                id: newChatRoom.id,
+                name: user.name,
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
