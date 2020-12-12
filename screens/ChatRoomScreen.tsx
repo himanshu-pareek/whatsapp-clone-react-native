@@ -20,7 +20,7 @@ const ChatRoomScreen = () => {
                 inverted
             />
 
-            <InputBoxComponent />
+            <InputBoxComponent chatRoomId={route.params?.id} />
         </ImageBackground>
     );
 };
