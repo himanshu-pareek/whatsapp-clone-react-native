@@ -10,14 +10,15 @@ import Colors from '../../constants/Colors';
 
 type ChatMessageProps = {
     message: Message,
+    currentUserId: string,
 };
 
 const ChatMessageComponent = (props: ChatMessageProps) => {
     const colorScheme = useColorScheme();
-    const { message } = props;
+    const { message, currentUserId } = props;
 
     const isMyMessage = () => {
-        return message.user.id === 'u1';
+        return message.user.id === currentUserId;
     };
 
     const getNameColor = () => {
