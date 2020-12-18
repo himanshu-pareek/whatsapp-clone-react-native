@@ -9,6 +9,7 @@ import InputBoxComponent from '../components/InputBox';
 import BG from '../assets/images/BG.png';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { messagesByChatRoom } from '../graphql/queries';
+import { onCreateMessage } from '../graphql/subscriptions';
 
 const ChatRoomScreen = () => {
     const route = useRoute();
@@ -17,6 +18,7 @@ const ChatRoomScreen = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
+        console.log(`Chat room id = ${route.params?.id}`);
         const fetchMessages = async () => {
             const messagesData = await API.graphql(
                 graphqlOperation(
@@ -26,6 +28,7 @@ const ChatRoomScreen = () => {
                 }
                 )
             );
+            console.log(messagesData.data.messagesByChatRoom.items);
             setMessages(messagesData.data.messagesByChatRoom.items);
         };
         fetchMessages();
@@ -37,6 +40,26 @@ const ChatRoomScreen = () => {
             setUser(userInfo);
         }
         fetchUser();
+    }, []);
+
+    useEffect(() => {
+        const subscription = API.graphql(
+            graphqlOperation(
+                onCreateMessage
+            )
+        );
+        subscription.subscribe({
+            next: (data) => {
+                const newMessage = data.value.data.onCreateMessage;
+                if (newMessage.chatRoomId !== route.params?.id) {
+                    console.log('Message for another room');
+                    return;
+                }
+                setMessages([newMessage, ...messages]);
+            }
+        });
+
+        return () => subscription.unsubscribe();
     }, []);
 
     return (

@@ -26,7 +26,6 @@ const ChatsScreen = () => {
         )
       );
       setChatRooms(userData.data.getUser.chatRoomsUser.items);
-      // console.log(userData.data.getUser.chatRoomsUser.items);
     };
 
     fetchChatRooms();

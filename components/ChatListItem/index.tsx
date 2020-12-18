@@ -38,7 +38,7 @@ const ChatListItem = (props: ChatListItemProps) => {
 
     const handleChatListItemPressed = () => {
         navigation.navigate('ChatRoom', {
-            id: chatRoom.id,
+            id: chatRoom.chatRoom.id,
             name: user?.name,
         });
     };
@@ -61,7 +61,7 @@ const ChatListItem = (props: ChatListItemProps) => {
                             </Text>
                             <Text style={styles.time}>
                                 {
-                                    chatRoom.lastMessage ? moment(chatRoom.lastMessage.createdAt).format('MM/DD/YYYY') : 'Never'
+                                    chatRoom.chatRoom.lastMessage ? moment(chatRoom.chatRoom.lastMessage.createdAt).format('MM/DD/YYYY') : 'Never'
                                 }
                             </Text>
                         </View>
@@ -69,7 +69,11 @@ const ChatListItem = (props: ChatListItemProps) => {
                             <Text style={styles.lastMessage}
                                 numberOfLines={1}
                                 ellipsizeMode='middle'>
-                                {chatRoom.lastMessage?.content || ''}
+                                {
+                                    chatRoom.chatRoom.lastMessage ?
+                                        `${chatRoom.chatRoom.lastMessage.user?.name}: ${chatRoom.chatRoom.lastMessage?.content}` :
+                                        ''
+                                }
                             </Text>
                         </View>
 

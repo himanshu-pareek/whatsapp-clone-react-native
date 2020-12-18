@@ -71,6 +71,29 @@ export const getChatRoom = /* GraphQL */ `
         }
         nextToken
       }
+      lastMessageId
+      lastMessage {
+        id
+        createdAt
+        content
+        userId
+        chatRoomId
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          lastMessageId
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -90,6 +113,15 @@ export const listChatRooms = /* GraphQL */ `
         }
         messages {
           nextToken
+        }
+        lastMessageId
+        lastMessage {
+          id
+          createdAt
+          content
+          userId
+          chatRoomId
+          updatedAt
         }
         createdAt
         updatedAt
@@ -123,6 +155,15 @@ export const getChatRoomUser = /* GraphQL */ `
         messages {
           nextToken
         }
+        lastMessageId
+        lastMessage {
+          id
+          createdAt
+          content
+          userId
+          chatRoomId
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -152,6 +193,7 @@ export const listChatRoomUsers = /* GraphQL */ `
         }
         chatRoom {
           id
+          lastMessageId
           createdAt
           updatedAt
         }
@@ -189,6 +231,15 @@ export const getMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        lastMessageId
+        lastMessage {
+          id
+          createdAt
+          content
+          userId
+          chatRoomId
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -219,6 +270,7 @@ export const listMessages = /* GraphQL */ `
         }
         chatRoom {
           id
+          lastMessageId
           createdAt
           updatedAt
         }
@@ -261,6 +313,7 @@ export const messagesByChatRoom = /* GraphQL */ `
         }
         chatRoom {
           id
+          lastMessageId
           createdAt
           updatedAt
         }

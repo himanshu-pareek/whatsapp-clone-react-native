@@ -6,7 +6,7 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 
-import { createMessage } from "../../graphql/mutations";
+import { createMessage, updateChatRoom } from "../../graphql/mutations";
 
 const InputBoxComponent = (props) => {
 
@@ -27,9 +27,26 @@ const InputBoxComponent = (props) => {
         console.log('Microphone pressed');
     };
 
+    const updateChatRoomLastMessage = async (messageId: string) => {
+        try {
+            const res = await API.graphql(
+                graphqlOperation(
+                    updateChatRoom, {
+                    input: {
+                        id: chatRoomId,
+                        lastMessageId: messageId
+                    }
+                }
+                )
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     const handleSendPress = async () => {
         try {
-            await API.graphql(
+            const messageData = await API.graphql(
                 graphqlOperation(
                     createMessage,
                     {
@@ -41,6 +58,9 @@ const InputBoxComponent = (props) => {
                     }
                 )
             );
+
+            console.log(messageData);
+            await updateChatRoomLastMessage(messageData.data.createMessage.id);
         } catch (error) {
             console.error(error);
         }
@@ -59,7 +79,7 @@ const InputBoxComponent = (props) => {
         <View style={styles.container}>
             <View style={styles.mainContainer}>
                 <FontAwesome5 name="laugh" size={24} color="grey" />
-                <TextInput 
+                <TextInput
                     multiline
                     style={styles.textInput}
                     value={message}
@@ -71,18 +91,18 @@ const InputBoxComponent = (props) => {
                 }
             </View>
 
-<TouchableOpacity onPress={handleButtonPress}>
+            <TouchableOpacity onPress={handleButtonPress}>
 
-            <View style={styles.buttonContainer}>
-                {
-                    !message
-                        ? <FontAwesome name="microphone" size={24} color="white" />
-                        : <FontAwesome name="send" size={24} color="white" />
-                }
-           
-            </View>
-            
-</TouchableOpacity>
+                <View style={styles.buttonContainer}>
+                    {
+                        !message
+                            ? <FontAwesome name="microphone" size={24} color="white" />
+                            : <FontAwesome name="send" size={24} color="white" />
+                    }
+
+                </View>
+
+            </TouchableOpacity>
         </View>
     );
 };
